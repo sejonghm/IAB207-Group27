@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+{% from "bootstrap5/form.html" import render_field %}
+
+{% block navbar %}
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+              <a class="nav-link" href="{{ url_for('event.booking_history') }}">Bookings</a>
+              <a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a>
+{% endblock %}
+{% block loginregister %}
+{% if heading|lower =='login' %}
+
+                <a class="nav-item nav-link" href="{{ url_for('auth.register') }}">Register</a>
+                <a class="nav-item nav-link active" href="{{ url_for('auth.login') }}">Log In</a>
+{% else %}
+                <a class="nav-item nav-link active" href="{{ url_for('auth.register') }}">Register</a>
+                <a class="nav-item nav-link" href="{{ url_for('auth.login') }}">Log In</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+<br>
+<div class="page-header">
+    <h1 class = text-center>{{heading}}</h1>
+</div>
+
+<!-- Form rendering is simple and easy if using bootstrap -->
+<div class = "container-fluid">
+    <div class = "row justify-content-center">
+        <div class="mb-3 col-sm-6 form-group">
+            {{ render_form(form) }}
+        </div> 
+    </div>
+<!-- When you have login form, then do show the user a link to register -->
+{% if heading|lower =='login' %}
+    <div class = "row justify-content-center">
+        <div class="mb-3 col-sm-6 form-group">
+            <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

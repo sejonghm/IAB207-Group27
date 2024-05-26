@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+{% from "bootstrap5/form.html" import render_field %}
+
+{% block navbar %}
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+              <a class="nav-link" href="{{ url_for('event.booking_history') }}">Bookings</a>
+              <a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a>
+{% endblock %}
+
+{% block content %}
+
+{% if event.user == current_user %}
+    <br><br>
+    <h1 class = text-center>Edit Your Event</h1>
+    <br><br>
+    <form action = "" method = "POST" name = "form" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        <div class = "container-fluid">
+            <div class = "row justify-content-center">
+                <div class="mb-3 col-sm-6">
+                    {{ form.name.label }}
+                    {{ form.name(value = event.name) }} {{ form.hidden_tag() }}
+                </div>
+            </div>
+            <div class = "row justify-content-center">
+                <div class="mb-3 col-sm-6">
+                    {{ form.artist.label }}
+                    {{ form.artist(value = event.artist) }} {{ form.hidden_tag() }}
+                </div>
+            </div>
+            <div class = "row justify-content-center">
+                <div class="mb-3 col-sm-6">
+                    {{ form.location.label }}
+                    {{ form.location(value = event.location) }} {{ form.hidden_tag() }}
+                </div>
+            </div>
+            <div class = "row justify-content-center">
+                <div class="mb-3 col-sm-3">
+                    {{ form.genre.label }}
+                    {{ form.genre(value = event.genre) }} {{ form.hidden_tag() }}
+                </div>
+                <div class="mb-3 col-sm-3">
+                    {{ form.tickets.label }}
+                    {{ form.tickets(value = event.tickets_left)}} {{ form.hidden_tag() }}
+                </div>
+            </div>
+            <div class = "row justify-content-center">
+                <div class="mb-3 col-sm-3">
+                    {{ form.date.label }}
+                    {{ form.date(value = event.event_date) }} {{ form.hidden_tag() }}
+                </div>
+                <div class="mb-3 col-sm-3">
+                    {{ form.time.label }}
+                    {{ form.time(value = event.time) }} {{ form.hidden_tag() }}
+                </div>
+            </div>
+            <div class = "row justify-content-center">
+                <div class="mb-3 col-sm-6">
+                    {{ form.description.label }}
+                    {{ form.description(value = "event.description") }} {{ form.hidden_tag() }}
+                </div>
+            </div>
+            <div class = "row justify-content-center">
+                <div class="mb-3 col-sm-6">
+                    {{ form.image.label }}
+                    {{ form.image(value = "event.image") }} {{ form.hidden_tag() }}
+                </div>
+            </div>
+            <br>
+            <div class = "row justify-content-center">
+                <div class = "mb-3 col-sm-3">
+                    {{ render_field(form.cancel) }} {{ form.hidden_tag() }}
+                </div>
+                <div class = "mb-3 col-sm-3"></div>
+            </div>
+            <div class = "row justify-content-center">
+                <div class = "mb-3 col-sm-3">
+                    {{ form.submit() }} {{ form.hidden_tag() }}
+                </div>
+                <div class = "mb-3 col-sm-3"></div>
+            </div>
+        </div>
+    </form>
+    {% else %}
+    <br><p class = text-center>You don't have access to this page.</p>
+    {% endif %}
+{% endblock %}

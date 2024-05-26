@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block navbar %}
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+              <a class="nav-link" href="{{ url_for('event.booking_history') }}">Bookings</a>
+              <a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a>
+{% endblock %}
+
+{% block content %}
+    <div class = "container">
+        <div class = "row gy-4">
+            <div class = "col-md-8">
+                <br><br>
+                <div class = "row">
+                    <img src = "{{event.image}}" style = "width:400px; height:250x;">
+                </div>
+                {% if event.user == current_user %}
+                <br><p> <a href="{{ url_for('edit.edit', id=event.id) }}">Edit your event here</a>.</p>
+                {% endif %}
+                <br><br>
+                <h1 class = "detailsheader">Artist</h1>
+                <p class = "detailspara">{{event.artist}}</p>
+                <h1 class = "detailsheader">Title</h1>
+                <p class = "detailspara">{{event.name}}</p>
+                <h1 class = "detailsheader">Location</h1>
+                <p class = "detailspara">{{event.location}}</p>
+                <h1 class = "detailsheader">Status</h1>
+                {% if event.status == "Open" %}
+                <p class = "detailspara">{{event.tickets_left}} available tickets</p>
+                {% else %}
+                <p class = "detailspara">{{event.status}}</p>
+                {% endif %}
+                <h1 class = "detailsheader">Genre</h1>
+                <p class = "detailspara">{{event.genre}}</p>
+                <h1 class = "detailsheader">Date & Time</h1>
+                <p class = "detailspara">{{event.event_date}} {{event.time}}</p>
+                <h1 class = "detailsheader">Description</h1>
+                <p class = "detailspara">{{event.description}}</p>
+            </div>
+            <div class = "col-md-4">
+                <br><br><br><br><br>
+                <div class = "row">
+                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style = "width:300px;">Book Now!
+                    </button>
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Purchase Tickets</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class = "row justify-content-center">
+                              <div class = "col-4">
+                                {{render_form(bookform,"/events/{0}/book".format(event.id))}}
+                              </div>
+                            </div><br>
+                            <div class = "row justify-content-center">
+                              <div class = "col-4">
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <br><br><br><br><br>
+                <h1 class = "detailsheader">Comments</h1>
+                <div class = "row">
+                    <div class = col-8>
+                      {{render_form(form,"/events/{0}/comment".format(event.id))}}
+                    </div>
+                </div>
+                {% for comment in event.comments %}
+                <div class = "row">
+                    <div class="card border-light col-10 commentbg">
+                        <div class="card-body">
+                          <div class="d-flex flex-row align-items-center">
+                                <p class="small mb-0 ms-2">{{comment.user.name}} {{comment.created_at.strftime('%d/%m/%y')}}<br>{{comment.text}}</p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
