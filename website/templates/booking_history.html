@@ -7,13 +7,30 @@
 {% endblock %}
 
 {% block content %}
-    <br><br>
-    <h1 class = text-center>Booking History</h1>
     <br>
+<div class="container-fluid profile">
+        <div class="row">
+            <div class="col-lg-6 col-sm-8 userdetail text-start">     
+                <h2 >User Detail:</h2>
+                <div class="mb-3 row">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">Username:</span>
+                        <input type="text" class="form-control" value="{{current_user.name}}" readonly aria-label="Username" aria-describedby="addon-wrapping">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">Email:</span>
+                        <input type="text" class="form-control" value="{{current_user.emailid}}" id="name" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <hr>
+    <h1 class = text-center>Booking History</h1>
     {% if bookings == [] %}
     <p class = text-center>You have no bookings.</p>
     {% else %}
-    <div class = "container-fluid">
         {% for booking in bookings %}
         <div class = "row justify-content-center p-3">
             <div class = "col-10">
