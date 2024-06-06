@@ -36,13 +36,9 @@
                     <option value="Other">Other</option>
                 </select>
             </div>
-        </div>
-
-        <div class="row justify-content-center">
             <div class="col-3">
                 <button type="submit" class="btn btn-block btn-secondary">Filter</button>
             </div>
-	    <div class="col-9"></div>
         </div>
     </form>
     <br>
@@ -55,10 +51,21 @@
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="card rounded shadow border border-secondary border-2">
                         <a href="{{ url_for('event.show', id=event.id) }}" class="stretched-link"></a>
-                        <img src="{{ event.image }}" class="card-img-top" style="height: 160px;" />
+                        <img src="{{ event.image }}" class="card-img-top img-fluid" style="height: 10rem; object-fit: cover; display: flex;" />
                         <div class="card-body">
                             <h5 class="card-title">{{ event.name }}</h5>
-                            <p class="card-text">{{event.status}}<br>{{ event.artist }}<br>{{ event.genre }}<br>{{ event.location }}<br>{{ event.event_date.strftime('%d/%m/%y') }}<br>{{ event.time }}</p>
+                            {% if event.status == "Open" %}
+                            <span class="badge text-bg-success">{{event.status}}</span>
+                            {% else %}
+                            <span class="badge text-bg-danger">{{event.status}}</span>
+                            {% endif %}
+                            <br>
+                            <p class="card-text">
+                                <strong>Artist:</strong> {{ event.artist }}<br>
+                                <strong>Genre: </strong>{{ event.genre }}<br>
+                                <strong>Venue: </strong>{{ event.location }}<br>
+                                <strong>Date: </strong>{{ event.event_date.strftime('%d/%m/%y') }} {{ event.time }}
+                            </p>
                         </div>
                     </div>
                 </div>

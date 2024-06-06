@@ -1,5 +1,5 @@
 body {
-    font-family: 'Phudu', cursive;
+    font-family: ;
     background-color: rgba(0, 0, 0, 0.041);
 }
 
@@ -37,4 +37,6 @@ footer {
     font-family: 'Arial', sans-serif;
 }
 
-
+ul {
+    padding-top: 1rem;
+  }

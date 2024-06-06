@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField,SubmitField, StringField, PasswordField, IntegerField, SelectField, DateField, BooleanField
-from wtforms.validators import InputRequired, Length, Email, EqualTo
+from wtforms.validators import InputRequired, Length, Email, EqualTo, NumberRange
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 
 #creates the login information
@@ -71,10 +71,10 @@ class EditEventForm(FlaskForm):
     
 
 class BookingForm(FlaskForm):
-    tickets = tickets = IntegerField('Tickets to Purchase', validators = [InputRequired()], render_kw={'class':'form-control rounded border border-secondary'})
+    tickets = tickets = IntegerField('Tickets to Purchase', validators = [InputRequired(), NumberRange(min=1)], render_kw={'class':'form-control rounded border border-secondary'})
     submit = SubmitField('Book', render_kw={'class':'form-control rounded border border-secondary'})
 
 #comment form
 class CommentForm(FlaskForm):
-    text = TextAreaField('Comment', [InputRequired(), Length(min=3, max=140)], render_kw={'class':'form-control rounded border border-secondary'})
+    text = TextAreaField('', [InputRequired(), Length(min=3, max=140)], render_kw={'class':'form-control rounded border border-secondary', 'placeholder': 'Leave a Comment!'})
     submit = SubmitField('Post')

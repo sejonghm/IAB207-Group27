@@ -8,38 +8,17 @@
 {% endblock %}
 
 {% block content %}
-    <div class = "container">
+    <div class = "container-fluid">
         <div class = "row gy-4">
-            <div class = "col-md-8">
+            <div class = "col-md-8 event-detail">
                 <br><br>
+                <h1>{{event.name}}</h1>
                 <div class = "row">
                     <img src = "{{event.image}}" style = "width:400px; height:250x;">
                 </div>
-                {% if event.user == current_user %}
-                <br><p> <a href="{{ url_for('edit.edit', id=event.id) }}">Edit your event here</a>.</p>
-                {% endif %}
-                <br><br>
-                <h1 class = "detailsheader">Artist</h1>
-                <p class = "detailspara">{{event.artist}}</p>
-                <h1 class = "detailsheader">Title</h1>
-                <p class = "detailspara">{{event.name}}</p>
-                <h1 class = "detailsheader">Location</h1>
-                <p class = "detailspara">{{event.location}}</p>
-                <h1 class = "detailsheader">Status</h1>
-                {% if event.status == "Open" %}
-                <p class = "detailspara">{{event.tickets_left}} available tickets</p>
-                {% else %}
-                <p class = "detailspara">{{event.status}}</p>
-                {% endif %}
-                <h1 class = "detailsheader">Genre</h1>
-                <p class = "detailspara">{{event.genre}}</p>
-                <h1 class = "detailsheader">Date & Time</h1>
-                <p class = "detailspara">{{event.event_date}} {{event.time}}</p>
-                <h1 class = "detailsheader">Description</h1>
-                <p class = "detailspara">{{event.description}}</p>
-            </div>
-            <div class = "col-md-4">
-                <br><br><br><br><br>
+                
+                <br>
+                {% if event.user != current_user %}
                 <div class = "row">
                     <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style = "width:300px;">Book Now!
                     </button>
@@ -68,10 +47,45 @@
                       </div>
                     </div>
                 </div>
+                <br>
+                {% endif %}
+                <h1 class = "detailsheader">Description: </h1>
+                <p class = "detailspara">{{event.description}}</p>
+                <hr>
+                <div class="col-lg-5 col-sm-8">
+                  <h1 class = "detailsheader">Event details:</h1>
+                  {% if event.user == current_user %}
+                  <h4> <a href="{{ url_for('edit.edit', id=event.id) }}">Click here to edit your event</a></h4>
+                  {% endif %}
+                  <ul class="list-group list-group-horizontal">
+                      <li class="list-group-item">Participating Artist: </li>
+                      <li class="list-group-item">{{event.artist}} </li>
+                  </ul>
+                  <ul class="list-group list-group-horizontal">
+                      <li class="list-group-item">Location / Venue: </li>
+                      <li class="list-group-item">{{event.location}} </li>
+                  </ul>
+                  <ul class="list-group list-group-horizontal">
+                      <li class="list-group-item">Time / Date: </li>
+                      <li class="list-group-item">{{event.event_date}} {{event.time}} </li>
+                  </ul>
+                  <ul class="list-group list-group-horizontal">
+                      <li class="list-group-item">Tickets available: </li>
+                      <li class="list-group-item">{{event.tickets_left}} </li>
+                  </ul>
+                  <ul class="list-group list-group-horizontal">
+                      <li class="list-group-item">Category / Genre: </li>
+                      <li class="list-group-item">{{event.genre}} </li>
+                  </ul>
+              </div>
+            </div>
+            <div class = "col-md-4 container-fluid">
+                <br><br>
+                
                 <br><br><br><br><br>
                 <h1 class = "detailsheader">Comments</h1>
                 <div class = "row">
-                    <div class = col-8>
+                    <div class = "container-fluid">
                       {{render_form(form,"/events/{0}/comment".format(event.id))}}
                     </div>
                 </div>
@@ -80,7 +94,10 @@
                     <div class="card border-light col-10 commentbg">
                         <div class="card-body">
                           <div class="d-flex flex-row align-items-center">
-                                <p class="small mb-0 ms-2">{{comment.user.name}} {{comment.created_at.strftime('%d/%m/%y')}}<br>{{comment.text}}</p>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item"><b>{{comment.user.name}}</b><br>{{comment.text}}</li>
+                            </ul> <br>
+                            Posted on: {{comment.created_at.strftime('%d/%m/%y')}}
                           </div>
                         </div>
                     </div>
